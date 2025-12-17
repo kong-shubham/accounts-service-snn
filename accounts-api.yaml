@@ -102,7 +102,84 @@ spec:
             - name: account_id
               in: path
               required: true
+              schema:
+                type: string
+          responses:
+            "200":
+              description: Account details
+      /accounts/{account_id}/debit:
+        post:
+          tags:
+            - accounts
+          summary: debit account
+          description: Deletes an account based on id
+          operationId: debitAccount
+          parameters:
+            - name: account_id
+              in: path
+              required: true
+              schema:
+                type: string
+          responses:
+            "200":
+              description: Account debited successfully
+      /accounts/{account_id}/credit:
+        post:
+          tags:
+            - accounts
+          summary: credit account
+          description: credits an account based on id
+          operationId: creditAccount
+          parameters:
+            - name: account_id
+              in: path
+              required: true
+              schema:
+                type: string
+          responses:
+            "200":
+              description: Account credited successfully
+      /health:
+        get:
+          tags:
+            - health
+          summary: health check
+          description: healtch check
+          operationId: healtCheck
+          responses:
+            "200":
+              description: Account credited successfully
+    components:
+      schemas:
+        CreateAccountRequest:
+          type: object
+          required:
+            - type
+            - initial_balance
+          properties:
+            type:
+              type: string
+              description: Type of account (e.g. checking, savings)
+            initial_balance:
+              type: number
+              format: double
+              description: Initial deposit amount
+        Account:
+          type: object
+          properties:
+            account_id:
+              type: string
+              format: uuid
+            type:
+              type: string
+            balance:
+              type: number
+    tags:
+      - name: accounts
+        description: Accounts endpoints
+      - name: health
+        description: health check
   meta:
     id: spc_1d25f319d3514c0c95f0990c9ce576de
     created: 1765950789934
-    modified: 1765950877185
+    modified: 1765959457507
