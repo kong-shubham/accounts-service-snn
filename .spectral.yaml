@@ -7,3 +7,10 @@ rules:
     then:
       field: description
       function: truthy
+
+  no-delete-accounts:
+    description: DELETE operations on accounts are not permitted
+    severity: error
+    given: "$.paths[*].delete"
+    then:
+      function: falsy
