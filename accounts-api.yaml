@@ -20,7 +20,89 @@ environments:
     modified: 1765950789935
     isPrivate: false
 spec:
+  contents:
+    openapi: 3.0.3
+    info:
+      title: Accounts API
+      version: 1.1.0
+      description: This API manages account information and balances.
+      contact:
+        email: stephen.brown@konghq.com
+    servers:
+      - url: http://localhost:8081
+        description: Local development server
+    paths:
+      /accounts:
+        post:
+          tags:
+            - accounts
+          summary: Create account
+          description: Creates a new account with an initial balance. The account ID is
+            automatically generated.
+          operationId: createAccount
+          requestBody:
+            description: Details of the new account
+            required: true
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/CreateAccountRequest"
+                examples:
+                  savings_account:
+                    summary: Savings account example
+                    value:
+                      type: savings
+                      initial_balance: 5000
+          responses:
+            "201":
+              description: Account created successfully
+              content:
+                application/json:
+                  schema:
+                    $ref: "#/components/schemas/Account"
+                  examples:
+                    created_account:
+                      summary: Created account
+                      value:
+                        account_id: 123e4567-e89b-12d3-a456-426614174000
+                        type: savings
+                        balance: 5000
+        get:
+          tags:
+            - accounts
+          summary: get all accounts
+          description: get all accounts
+          operationId: getAllAccounts
+          responses:
+            "200":
+              description: Account retrieved successfully
+      /accounts/{account_id}:
+        delete:
+          tags:
+            - accounts
+          summary: Delete account
+          description: Deletes an account based on id
+          operationId: deleteAccount
+          parameters:
+            - name: account_id
+              in: path
+              required: true
+              schema:
+                type: string
+          responses:
+            "204":
+              description: Account deleted successfully
+        get:
+          tags:
+            - accounts
+          summary: get account details
+          description: get an account based on id
+          operationId: getAccount
+          parameters:
+            - name: account_id
+              in: path
+              required: true
   meta:
     id: spc_1d25f319d3514c0c95f0990c9ce576de
     created: 1765950789934
-    modified: 1765950810692
+    modified: 1765950877185
